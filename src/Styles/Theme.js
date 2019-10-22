@@ -7,11 +7,11 @@ export default {
     lightGrayColor: "#c7c7c7",
     redColor: "#ED4956",
     blueColor: "#3897f0",
-    dartBlueColor: "#003569",
+    darkBlueColor: "#003569",
     boxBorder: BOX_BORDER,
     borderRadius: BORDER_RADIUS,
-    whiteBox: `${BORDER_RADIUS};
-               ${BOX_BORDER};
+    whiteBox: `border: ${BOX_BORDER};
+               border-radius: ${BORDER_RADIUS};
                background-color: white;
               `
 }
