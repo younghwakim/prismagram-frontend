@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AuthPresenter from "./AuthPresenter";
 import useInput from "../../Hooks/useInput";
 import { useMutation } from "react-apollo-hooks";
-import { LOG_IN, CREATE_ACCOUNT } from "./AuthQueries";
+import { LOG_IN, CREATE_ACCOUNT, CONFIRM_SECRET, LOCAL_LOG_IN } from "./AuthQueries";
 import { toast } from "react-toastify";
 
 export default () => {
@@ -25,6 +25,15 @@ export default () => {
         }
     });
     
+    const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
+        variables: {
+            email: email.value,
+            secret: secret.value
+        }
+    });
+
+    const [localLogInMutation] = useMutation(LOCAL_LOG_IN);
+
     const onSubmit = async e => {
         e.preventDefault();
         if(action === "logIn") {
@@ -56,7 +65,7 @@ export default () => {
                     if(!createAccount) {
                         toast.error("계정 생성을 실패하였습니다.");
                     } else {
-                        toast.success("계정이 생성되었습니다. 로그인 페이지로 이동합니다.");
+                        toast.success("가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
                         setTimeout(() => setAction("logIn"), 3000);
                     }
                 } catch(e) {
@@ -64,6 +73,19 @@ export default () => {
                 }
             } else {
                 toast.error("모든 항목을 입력하세요.");
+            }
+        } else if(action === "confirm") {
+            if(secret.value !== "") {
+                try {
+                    const { data: { confirmSecret: token } } = await confirmSecretMutation();
+                    if(token !== "" && token !== undefined ) {
+                        localLogInMutation({ variables: { token } });
+                    } else {
+                        throw Error();
+                    }
+                } catch {
+                    toast.error("인증을 실패했습니다. 인증번호를 확인하세요.");
+                }
             }
         }
     };
