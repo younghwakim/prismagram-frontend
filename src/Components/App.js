@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
 export default () => {
   const { data: { isLoggedIn } } = useQuery(QUERY);
-  
+
   return (
     <ThemeProvider theme={Theme}>
       <>
@@ -34,7 +34,7 @@ export default () => {
             <>
               <Header />
               <Wrapper>
-                <Router isLoggedIn={isLoggedIn} />
+                <Routes isLoggedIn={isLoggedIn} />
                 <Footer />
               </Wrapper>
             </>
