@@ -1,7 +1,7 @@
 export const defaults = {
     isLoggedIn: Boolean(localStorage.getItem("token")) || false
 };
-console.log(localStorage.getItem("token"));
+
 export const resolvers = {
     Mutation: {
         logUserIn: (_, { token }, { cache }) => {
