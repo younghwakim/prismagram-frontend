@@ -8,10 +8,12 @@ import { Compass, HeartEmpty, User, Logo } from "./Icons";
 import { useQuery } from "react-apollo-hooks";
 
 const Header = styled.header`
-    ${props => props.theme.whiteBox};
     width: 100%;
-    background-color: white;
     border: 0;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    background-color: white;
     border-bottom: ${props => props.theme.boxBorder};
     border-radius: 0px;
     margin-bottom: 60px;
@@ -19,6 +21,7 @@ const Header = styled.header`
     justify-content: center;
     align-items: center;
     padding: 25px 0px;
+    z-index: 2;
 `;
 
 const HeaderWrapper = styled.div`

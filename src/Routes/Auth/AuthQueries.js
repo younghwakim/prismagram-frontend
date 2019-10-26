@@ -40,8 +40,8 @@ export const LOCAL_LOG_IN = gql`
     }
 `;
 
-export const LOCAL_LOG_OUT = gql`
-    mutation logUserOut {
-        logUserOut @client
-    }
-`;
+// export const LOCAL_LOG_OUT = gql`
+//     mutation logUserOut {
+//         logUserOut @client
+//     }
+// `;
