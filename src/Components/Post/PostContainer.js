@@ -42,10 +42,7 @@ const PostContainer = ({ id, caption, location, user, files, likeCount, isLiked,
         if (which === 13) {
           event.preventDefault();
           try {
-            const {
-              data: { addComment }
-            } = await addCommentMutation();
-            // setSelfComments([...selfComments, addComment]);
+            const { data: { addComment } } = await addCommentMutation();
             comment.setValue("");
           } catch {
             toast.error("Cant send comment");

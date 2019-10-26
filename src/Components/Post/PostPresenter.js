@@ -85,7 +85,16 @@ const Textarea = styled(TextareaAutosize)`
     }
 `;
 
-const Comment = styled.div``;
+const Comments = styled.ul`
+  margin-top: 10px;
+`;
+
+const Comment = styled.li`
+  margin-bottom: 7px;
+  span {
+    margin-right: 5px;
+  }
+`;
 
 export default ({
   user: { username, avatar },
@@ -125,14 +134,18 @@ export default ({
         </Button>
       </Buttons>
       <FatText text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-        {comments &&
-            comments.map(comment => (
-                <Comment>
-                    <FatText text={comment.user.username} />
+        {comments && (
+          <Comments>
+            {
+              comments.map(comment => (
+                <Comment key={comment.id}>
+                    <FatText text={comment.user ? comment.user.username : "알 수 없는 사용자"} />
                     {comment.text}
                 </Comment>
-            ))
-        }
+              ))
+            }
+          </Comments>
+        )}
       <Timestamp>{createdAt}</Timestamp>
       <Textarea
         placeholder={"Add a comment..."}
