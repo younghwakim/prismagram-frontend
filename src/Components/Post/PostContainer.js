@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useInput from "../../Hooks/useInput";
 import PostPresenter from "./PostPresenter";
+import { useMutation } from "react-apollo-hooks";
+import { TOGGLE_LIKE, ADD_COMMENT } from "./PostQueries";
 
 const PostContainer = ({ id, caption, location, user, files, likeCount, isLiked, comments, createdAt }) => {
     const [isLikedS, setIsLiked] = useState(isLiked);
     const [likeCountS, setLikeCount] = useState(likeCount);
     const [currentItem, setCuttentItem] = useState(0);
     const comment = useInput("");
+    const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
+        variables: { postId: id }
+    });
+    const [addCommentMutation] = useMutation(ADD_COMMENT, {
+        variables: { postId: id, text: comment.value }
+    });
     const slide = () => {
         const totalFiles = files.length;
         if(currentItem === totalFiles - 1) {
@@ -16,9 +24,27 @@ const PostContainer = ({ id, caption, location, user, files, likeCount, isLiked,
             setTimeout(() => setCuttentItem(currentItem + 1), 3000);
         }
     };
-    useEffect(() => {
-        slide();
-    }, [currentItem]);
+    useEffect(slide, [currentItem]);
+
+    const toggleLike = () => {
+        toggleLikeMutation();
+        setIsLiked(!isLikedS);
+        if(isLikedS) {
+            setLikeCount(likeCountS - 1);
+        } else {
+            setLikeCount(likeCountS + 1);
+        }
+    }
+
+    const onKeyUp = e => {
+        const { keyCode } = e;
+        if(keyCode === 13) {
+            addCommentMutation();
+            comment.setValue("");
+        }
+        return;
+    };
+
     return (
       <PostPresenter
         caption={caption}
@@ -33,6 +59,8 @@ const PostContainer = ({ id, caption, location, user, files, likeCount, isLiked,
         setIsLiked={setIsLiked}
         setLikeCount={setLikeCount}
         currentItem={currentItem}
+        toggleLike={toggleLike}
+        onKeyUp={onKeyUp}
       />
     );
 }
