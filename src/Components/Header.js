@@ -10,7 +10,7 @@ import { useQuery } from "react-apollo-hooks";
 const Header = styled.header`
     width: 100%;
     border: 0;
-    /* position: fixed; */
+    position: fixed;
     top: 0;
     left: 0;
     background-color: white;
