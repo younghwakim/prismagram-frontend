@@ -41,13 +41,10 @@ const PostContainer = ({ id, caption, location, user, files, likeCount, isLiked,
         const { which } = event;
         if (which === 13) {
           event.preventDefault();
-          try {
-            const { data: { addComment } } = await addCommentMutation();
-            comment.setValue("");
-          } catch {
-            toast.error("Cant send comment");
-          }
+          comment.setValue("");
+          addCommentMutation();
         }
+        return;
     };
 
     return (
