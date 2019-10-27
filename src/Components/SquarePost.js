@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { HeartFull, CommentFull } from "../Components/Icons";
+import { HeartFull, CommentFull } from "./Icons";
 
 const Overlay = styled.div`
     background-color: rgba(0, 0, 0, 0.6);
